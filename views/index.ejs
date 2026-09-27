@@ -1,22 +1,16 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Internship Application</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 
-
 <body class="bg-gray-100 min-h-screen">
-
 
 <% if (submitted) { %>
 
@@ -30,67 +24,72 @@
             id="prankVideo"
             class="w-full h-full object-contain"
             autoplay
+            muted
             playsinline
-            controls
+            preload="auto"
         >
-
             <source src="/prank.mp4" type="video/mp4">
-
             Your browser does not support video playback.
-
         </video>
 
-
+        <!-- Overlay -->
         <div class="absolute top-6 left-1/2 -translate-x-1/2">
-
             <div class="bg-white px-6 py-3 rounded-full shadow-lg">
-
                 <p class="font-bold text-xl">
                     😂 GOT YOU!
                 </p>
-
             </div>
-
         </div>
+
+        <!-- Unmute button -->
+        <button
+            id="soundButton"
+            class="absolute bottom-8 left-1/2 -translate-x-1/2
+                   bg-white text-black px-6 py-3 rounded-full
+                   font-bold shadow-lg"
+        >
+            🔊 Turn Sound On
+        </button>
 
     </div>
 
-
     <script>
-
         const video = document.getElementById("prankVideo");
+        const soundButton = document.getElementById("soundButton");
 
-        // Start video immediately
-        window.addEventListener("load", async () => {
+        // Start immediately
+        window.addEventListener("load", () => {
 
-            try {
+            video.currentTime = 0;
 
-                await video.play();
-
-                console.log("Video started automatically");
-
-            } catch (error) {
-
-                console.log("Autoplay with sound was blocked:", error);
-
-                // Fallback: play muted if browser blocks sound
-                video.muted = true;
-
-                try {
-                    await video.play();
-                } catch (err) {
-                    console.log("Video playback blocked:", err);
-                }
-
-            }
+            video.play()
+                .then(() => {
+                    console.log("Video started automatically");
+                })
+                .catch((error) => {
+                    console.log("Autoplay failed:", error);
+                });
 
         });
 
+        // Enable sound after user interaction
+        soundButton.addEventListener("click", async () => {
+
+            video.muted = false;
+
+            try {
+                await video.play();
+
+                soundButton.style.display = "none";
+
+            } catch (error) {
+                console.log("Could not enable sound:", error);
+            }
+
+        });
     </script>
 
-
 <% } else { %>
-
 
     <!-- ========================= -->
     <!-- INTERNSHIP FORM -->
@@ -108,12 +107,9 @@
                 Entry-Level Software Development Internship
             </p>
 
-
             <form action="/submit" method="POST">
 
-
                 <!-- Name -->
-
                 <div class="mb-6">
 
                     <label class="block font-medium mb-2">
@@ -130,9 +126,7 @@
 
                 </div>
 
-
                 <!-- Email -->
-
                 <div class="mb-6">
 
                     <label class="block font-medium mb-2">
@@ -149,9 +143,7 @@
 
                 </div>
 
-
                 <!-- Skill -->
-
                 <div class="mb-6">
 
                     <label class="block font-medium mb-2">
@@ -184,9 +176,7 @@
 
                 </div>
 
-
                 <!-- Experience -->
-
                 <div class="mb-8">
 
                     <label class="block font-medium mb-2">
@@ -203,18 +193,15 @@
 
                 </div>
 
-
                 <!-- Submit -->
-
                 <button
                     type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
+                    class="w-full bg-blue-600 hover:bg-blue-700
+                           text-white font-semibold py-3
+                           rounded-lg transition"
                 >
-
                     Submit Application
-
                 </button>
-
 
             </form>
 
@@ -222,11 +209,7 @@
 
     </div>
 
-
 <% } %>
 
-
 </body>
-
 </html>
-```

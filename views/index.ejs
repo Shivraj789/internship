@@ -1,21 +1,28 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Internship Application</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
+
 
 <body class="bg-gray-100 min-h-screen">
 
 
 <% if (submitted) { %>
 
+    <!-- ========================= -->
     <!-- PRANK VIDEO -->
+    <!-- ========================= -->
 
     <div class="fixed inset-0 bg-black flex items-center justify-center">
 
@@ -23,18 +30,27 @@
             id="prankVideo"
             class="w-full h-full object-contain"
             autoplay
-            controls
             playsinline
+            controls
         >
+
             <source src="/prank.mp4" type="video/mp4">
+
+            Your browser does not support video playback.
+
         </video>
 
+
         <div class="absolute top-6 left-1/2 -translate-x-1/2">
+
             <div class="bg-white px-6 py-3 rounded-full shadow-lg">
+
                 <p class="font-bold text-xl">
                     😂 GOT YOU!
                 </p>
+
             </div>
+
         </div>
 
     </div>
@@ -44,18 +60,27 @@
 
         const video = document.getElementById("prankVideo");
 
-        // Try to enter fullscreen
-        video.addEventListener("play", async () => {
+        // Start video immediately
+        window.addEventListener("load", async () => {
 
             try {
 
-                if (document.documentElement.requestFullscreen) {
-                    await document.documentElement.requestFullscreen();
-                }
+                await video.play();
+
+                console.log("Video started automatically");
 
             } catch (error) {
 
-                console.log("Fullscreen not available");
+                console.log("Autoplay with sound was blocked:", error);
+
+                // Fallback: play muted if browser blocks sound
+                video.muted = true;
+
+                try {
+                    await video.play();
+                } catch (err) {
+                    console.log("Video playback blocked:", err);
+                }
 
             }
 
@@ -67,7 +92,9 @@
 <% } else { %>
 
 
+    <!-- ========================= -->
     <!-- INTERNSHIP FORM -->
+    <!-- ========================= -->
 
     <div class="max-w-2xl mx-auto py-10 px-4">
 
@@ -175,7 +202,7 @@
                     ></textarea>
 
                 </div>
-s
+
 
                 <!-- Submit -->
 
@@ -183,8 +210,11 @@ s
                     type="submit"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
                 >
+
                     Submit Application
+
                 </button>
+
 
             </form>
 
@@ -199,3 +229,4 @@ s
 </body>
 
 </html>
+```

@@ -1,3 +1,4 @@
+
 const express = require("express");
 
 const app = express();
@@ -11,9 +12,11 @@ app.use(express.static("public"));
 
 // Show form
 app.get("/", (req, res) => {
+
     res.render("index", {
         submitted: false
     });
+
 });
 
 
@@ -25,9 +28,13 @@ app.post("/submit", (req, res) => {
     res.render("index", {
         submitted: true
     });
+
 });
 
 
 app.listen(PORT, () => {
+
     console.log(`Server running at http://localhost:${PORT}`);
+
 });
+
